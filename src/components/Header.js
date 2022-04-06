@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 import { Button, Grid, Text } from "../elements";
 
 const Header = () => {
+  
+  const history = useHistory();
   
 
   return (
@@ -15,8 +18,8 @@ const Header = () => {
         </Grid>
         
         <Grid is_flex>
-          <Button text="로그인"></Button>
-          <Button text="회원가입"></Button>
+          <Button text="로그인" _onClick={() => {history.push("/login")}}></Button>
+          <Button text="회원가입" _onClick={() => {history.push("/signup")}}></Button>
         </Grid>
 
       </Grid>

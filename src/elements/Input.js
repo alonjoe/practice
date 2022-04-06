@@ -49,7 +49,7 @@ const ElTextarea = styled.textarea`
 const ElInput = styled.input`
   border: 1px solid #212121;
   width: 100%;
-  padding: 12px 4px;
+  padding: 12px 10px;
   box-sizing: border-box;
 `;
 
