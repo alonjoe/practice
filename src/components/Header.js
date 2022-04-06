@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
+import { history } from "../redux/ConfigStore";
 
 import { Button, Grid, Text } from "../elements";
 
 const Header = () => {
   
-  const history = useHistory();
+  // const history = useHistory();
   // 로그인 했는지 안했는지 확인! 했을때 안했을떄 상단메뉴 바뀌니까
   const [is_login, setIsLogin] = React.useState(false);
 
