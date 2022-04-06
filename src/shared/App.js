@@ -8,7 +8,7 @@ import SignUp from '../pages/SignUp';
 import Header from '../components/Header';
 
 // 리덕스랑 같은 history를 사용한다...는 개념..?
-import { ConnectRouter } from "connected-react-router";
+import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/ConfigStore";
 
 
@@ -17,11 +17,11 @@ function App() {
     <React.Fragment>
       
       <Header></Header>
-      <ConnectRouter history={history}>
+      <ConnectedRouter history={history}>
         <Route path={"/"} component={PostList} exact />
         <Route path={"/login"} component={Login} exact />
         <Route path={"/signup"} component={SignUp} exact />
-      </ConnectRouter>
+      </ConnectedRouter>
     </React.Fragment>
   );
 }

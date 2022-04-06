@@ -37,8 +37,7 @@ export default handleActions(
       }),
 
     [GET_USER]: (state, action) => produce(state, (draft) => {}),  // 연결하면 이런모양임.
-  }
-  
+  }, initialState
 );
 
 
