@@ -5,10 +5,14 @@ import App from './shared/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 
+// 스토어 연결!!
+import store from "./redux/ConfigStore";
+import { Provider } from "react-redux";
+
 ReactDOM.render(
-  <BrowserRouter>
+  <Provider store={store}>
     <App />
-  </BrowserRouter>,
+  </Provider>,
   document.getElementById('root')
 );
 
