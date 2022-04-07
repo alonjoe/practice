@@ -7,7 +7,7 @@ import PostList from '../pages/PostList';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
 import Header from '../components/Header';
-import Permit from './Permin';
+import Permit from './Permit';
 
 // 리덕스랑 같은 history를 사용한다...는 개념..?
 import { ConnectedRouter } from "connected-react-router";

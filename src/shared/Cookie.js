@@ -17,9 +17,10 @@ const getCookie = (name) => {
   
   // value를 return!
   if (parts.length === 2) {
-    console.log(parts.pop().split(";").shift())
+    // console.log(parts.pop().split(";").shift())
 		return parts.pop().split(";").shift();
 	}
+    return false;
 };
 
 
