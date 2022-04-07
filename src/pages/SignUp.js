@@ -4,6 +4,8 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 import { Grid, Input, Text, Button } from "../elements";
 
+import { emailCheck } from "../shared/common";
+
 const SignUp = () => {
 
   const dispatch = useDispatch();
@@ -15,6 +17,11 @@ const SignUp = () => {
 
   const signup = (props) => {
     if (id === "" || pw === "" || user_name === "") {
+      return;
+    }
+
+    if(!emailCheck(id)){
+      window.alert('이메일 형식이 맞지 않습니다!');
       return;
     }
     
