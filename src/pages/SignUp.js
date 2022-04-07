@@ -13,7 +13,7 @@ const SignUp = () => {
   const [pw_check, setPwCheck] = React.useState("");
   const [user_name, setUserName] = React.useState("");
 
-  const signup = () => {
+  const signup = (props) => {
     if (id === "" || pw === "" || user_name === "") {
       return;
     }

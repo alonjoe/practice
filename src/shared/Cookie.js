@@ -1,16 +1,23 @@
-import React from "react";
-
 
 // 로그인시에 이용할 쿠키 함수
 
 // 키값 기준으로 쿠키에 저장된 값을 가져오는 함수
 const getCookie = (name) => {
+
+  console.log(name)  // user_id
+
   // 쿠키 값을 가져옵니다.
   let value = "; " + document.cookie;
+  console.log(document.cookie)
+  console.log(value)
+  
   // 키 값을 기준으로 파싱합니다.
-  let parts = value.split("; " + name + "=");
+  let parts = value.split(`; ${name}=`);
+  console.log(parts)
+  
   // value를 return!
   if (parts.length === 2) {
+    console.log(parts.pop().split(";").shift())
 		return parts.pop().split(";").shift();
 	}
 };

@@ -1,9 +1,11 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
-import { auth } from "../../shared/firebase";
+import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 
-// import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
+import { auth } from "../../shared/firebase";
+import firebase from "firebase/app";
+
 
 
 // 액션 타입 만들기!
@@ -25,13 +27,54 @@ const initialState = {
 
 // 미들웨어!!!
 // 로그인!!
-const loginAction = (user) => {
-  return function (dispatch, getState, { history }) {
-    console.log(history);
-    dispatch(setUser(user));
-    history.push("/");
-  };
-};
+const loginFB = (id, pw) => {
+  return function (dispatch, getState, {history}) {
+    auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then((res) => {
+      auth
+        .signInWithEmailAndPassword(id, pw)
+        .then((user) => {
+          console.log(user);
+
+          dispatch(
+            setUser({
+              user_name: user.user.displayName,
+              id: id,
+              user_profile: "",
+              uid: user.user.uid,
+            })
+          );
+
+          history.push("/");
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+
+          console.log(errorCode, errorMessage);
+        });
+    });
+  }
+}
+
+// 로그인 확인
+const loginCheckFB = () => {
+  return function (dispatch, getState, {history}){
+    auth.onAuthStateChanged((user) => {
+      if(user){
+        dispatch(
+          setUser({
+            user_name: user.displayName,
+            user_profile: "",
+            id: user.email,
+            uid: user.uid,
+          })
+        );
+      }else{
+        dispatch(logOut());
+      }
+    })
+  }
+}
 
 // 회원가입!! auth 이용
 const signupFB = (id, pw, user_name) => {
@@ -64,20 +107,30 @@ const signupFB = (id, pw, user_name) => {
   }
 }
 
+// 로그아웃!!
+const logoutFB = () => {
+  return function (dispatch, getState, {history}) {
+    auth.signOut().then(() => {
+      dispatch(logOut());
+      history.replace('/');
+    })
+  }
+}
+
 
 // 리듀서!!!
 export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        // setCookie("is_login", "success");
+        setCookie("is_login", "success");
         draft.user = action.payload.user;    // payload는 draft사용하면 무조건 들어가는듯
         draft.is_login = true;
       }),
     
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        // deleteCookie("is_login");
+        deleteCookie("is_login");
         draft.user = null;
         draft.is_login = false;
       }),
@@ -89,10 +142,12 @@ export default handleActions(
 
 // 한번에 내보내기!!!
 const actionCreators = {
+  loginFB,  
   logOut,
   getUser,
-  loginAction,
+  loginCheckFB,
   signupFB,
+  logoutFB,
 };
 
 export { actionCreators }; // export
